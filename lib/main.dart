@@ -12,10 +12,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool mailClicked = false;
+  bool callClicked = false;
+  bool routeClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +35,8 @@ class HomePage extends StatelessWidget {
         body: Container(
           child: ListView(
             children: [
-              /*Image.network(
-                  'https://cruce.iteso.mx/wp-content/uploads/sites/123/2018/04/Portada-2-e1525031912445.jpg'),*/
+              Image.network(
+                  'https://cruce.iteso.mx/wp-content/uploads/sites/123/2018/04/Portada-2-e1525031912445.jpg'),
               Container(
                 height: 20,
               ),
@@ -61,16 +70,22 @@ class HomePage extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         onPressed: () {
-                          final snackBar = SnackBar(
-                            content: const Text('Sending email...'),
-                            action: SnackBarAction(
-                                label: 'label', onPressed: () {}),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          if (!mailClicked) {
+                            final snackBar = SnackBar(
+                              content: const Text('Sending email...'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+
+                          setState(() {
+                            mailClicked = !mailClicked;
+                          });
                         },
                         icon: Icon(
                           Icons.mail,
                           size: 44,
+                          color: mailClicked ? Colors.indigo : Colors.black,
                         ),
                       ),
                       Text('Correo')
@@ -82,17 +97,20 @@ class HomePage extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                           onPressed: () {
-                            final snackBar = SnackBar(
-                              content: const Text('Calling...'),
-                              action: SnackBarAction(
-                                  label: 'label', onPressed: () {}),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            if (!callClicked) {
+                              final snackBar =
+                                  SnackBar(content: const Text('Calling...'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                            setState(() {
+                              callClicked = !callClicked;
+                            });
                           },
                           icon: Icon(
                             Icons.call,
                             size: 44,
+                            color: callClicked ? Colors.indigo : Colors.black,
                           )),
                       Text('Llamada')
                     ],
@@ -103,15 +121,20 @@ class HomePage extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(horizontal: 3, vertical: 5),
                           onPressed: () {
-                            final snackBar = SnackBar(
-                              content: const Text('Searching...'),
-                              action: SnackBarAction(
-                                  label: 'label', onPressed: () {}),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            if (!routeClicked) {
+                              final snackBar =
+                                  SnackBar(content: const Text('Searching...'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                            setState(() {
+                              routeClicked = !routeClicked;
+                            });
                           },
-                          icon: Icon(Icons.directions, size: 44)),
+                          icon: Icon(Icons.directions,
+                              size: 44,
+                              color:
+                                  routeClicked ? Colors.indigo : Colors.black)),
                       Text('Ruta')
                     ],
                   )
